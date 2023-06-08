@@ -12,7 +12,7 @@ class MarketingTipsApiController extends Controller
     public function index()
     {
         try {
-            $marketingTips = MarketingTips::all();
+            $marketingTips = MarketingTips::latest()->get();
             return response()->json([
                 'status' => true,
                 'message' => "all marketing_tips Data",
