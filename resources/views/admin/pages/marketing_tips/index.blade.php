@@ -42,7 +42,7 @@
                                 <tbody>
                                     @foreach($marketingTips as $marketingTip )
                                     <tr>
-                                        <td>{{ $loop->iteration  }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <div>
                                                 @if(!empty($marketingTip->image) && File::exists(public_path($marketingTip->image)))

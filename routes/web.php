@@ -66,7 +66,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/marketing_tips', [MarketingTipsController::class, 'store'])->name('marketing_tips-store');
     Route::get('/marketing_tips-edit/{id}', [MarketingTipsController::class, 'edit'])->name('marketing_tips-edit');
     Route::post('/marketing_tips/{id}', [MarketingTipsController::class, 'update'])->name('marketing_tips-update');
-    Route::delete('/marketing_tips/{id}', [MarketingTipsController::class, 'destroy'])->name('marketing_tips-destroy');
+    Route::get('/marketing_tips/{id}', [MarketingTipsController::class, 'destroy'])->name('marketing_tips-destroy');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('change-password/{id}', [ProfileController::class, 'changePassword'])->name('change-password');

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class CustomerApiController extends Controller
 {
@@ -17,7 +18,11 @@ class CustomerApiController extends Controller
     {
         try {
             $user = Auth::user();
-            $customers = $user->customers;
+            $customers = $user->customers->map(function ($customer) {
+                $customer->birth_date = date('d M', strtotime($customer->birth_date));
+                return $customer;
+            });
+
             if ($customers->isEmpty()) {
                 return response()->json([
                     'status' => true,
@@ -39,7 +44,6 @@ class CustomerApiController extends Controller
             ]);
         }
     }
-
     public function store(Request $request)
     {
         try {
@@ -62,8 +66,8 @@ class CustomerApiController extends Controller
             $customer->email = $request->input('email');
             $birthDate = $request->input('birth_date');
             $dob = '0000-' . date('m-d', strtotime($birthDate));
-            $customer->user_id = Auth::user()->id;
             $customer->birth_date = $dob;
+            $customer->user_id = Auth::user()->id;
             if ($request->hasFile('images')) {
                 $path = '/uploads/customers/';
                 $file = $request->file('images');
@@ -93,8 +97,7 @@ class CustomerApiController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'first_name' => 'sometimes|required',
-                'phone' => 'sometimes|digits:10|unique:customers,phone,' . $id,
-                'email' => 'sometimes|nullable|email|unique:customers,email,' . $id,
+                'email' => 'nullable|email',
                 'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
             if ($validator->fails()) {
@@ -102,7 +105,6 @@ class CustomerApiController extends Controller
                 $firstError = $errors->first();
                 throw new Exception($firstError);
             }
-
             $customer = Customer::find($id);
             if (!$customer) {
                 throw new Exception('Customer not found');
@@ -110,10 +112,15 @@ class CustomerApiController extends Controller
             if (Auth::user()->id !== $customer->user_id) {
                 throw new Exception('Unauthorized');
             }
-            $customer->update($request->all());
+
+            // Update customer details
+            $customer->fill($request->except('birth_date'));
+
             $birthDate = $request->input('birth_date');
-            $dob = '0000-' . date('m-d', strtotime($birthDate));
-            $customer->birth_date = $dob;
+            if ($birthDate) {
+                $dob = '0000-' . date('m-d', strtotime($birthDate));
+                $customer->birth_date = $dob;
+            }
 
             if ($request->hasFile('images')) {
                 $des = '/uploads/customers/' . $customer->image;
@@ -127,8 +134,7 @@ class CustomerApiController extends Controller
                 $file->move('uploads/customers/', $filename);
                 $customer->images = $filename;
             }
-
-            $customer->update();
+            $customer->save();
             return response()->json([
                 'status' => true,
                 'message' => 'Customer updated successfully',
@@ -142,6 +148,7 @@ class CustomerApiController extends Controller
             ], 400);
         }
     }
+
 
     public function destroy($id)
     {

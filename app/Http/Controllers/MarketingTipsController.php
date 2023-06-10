@@ -22,7 +22,6 @@ class MarketingTipsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'images' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required',
             'title' => 'required',
         ]);
@@ -31,9 +30,10 @@ class MarketingTipsController extends Controller
         $marketingTip->title = $request->title;
         $marketingTip->description = $request->description;
         if ($request->hasfile('images')) {
+            $path = 'uploads/marketingTip/';
             $file = $request->file('images');
             $extention = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extention;
+            $filename = $path . time() . '.' . $extention;
             $file->move('uploads/marketingTip/', $filename);
             $marketingTip->image = $filename;
         }
@@ -62,7 +62,7 @@ class MarketingTipsController extends Controller
             if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $path = '/uploads/marketingTip/';
+            $path = 'uploads/marketingTip/';
             $file = $request->file('images');
             $extention = $file->getClientOriginalExtension();
             $filename = $path . time() . '.' . $extention;

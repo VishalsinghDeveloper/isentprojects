@@ -40,14 +40,14 @@
                 </div>
                 <div class="form-group">
                     <label>Image Upload<span style="color: red">*</span></label>
-                    <input type="file" name="image" class="file-upload-default">
+                    <input type="file" name="images" class="file-upload-default">
                     <div class="input-group col-xs-12">
-                        <input type="file " class="form-control file-upload-info" placeholder="Upload Image">
+                        <input type="file " class="form-control file-upload-info" name="images" placeholder="Upload Image">
                         <span class="input-group-append">
                             <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>
                     </div>
-                    @error('image')
+                    @error('images')
                     <span>
                         <div class="text-danger small">{{ $message }}</div>
                     </span>

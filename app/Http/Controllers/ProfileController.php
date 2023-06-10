@@ -30,10 +30,11 @@ class ProfileController extends Controller
     }
 
     public function changeprofile(Request $request,$id){
+        $user = User::find($id);
         $request->validate([
             'name'=> 'required',
             'email'=> 'email',
-            'phone'=> 'required|digits:10',
+            'phone'=> 'required|digits:10|unique:users,phone,' . $user->id,
         ]);
         $user =User::find($id);
         $user->name = $request->name;
@@ -43,10 +44,12 @@ class ProfileController extends Controller
         return redirect()->back()->with("message","Your changes successfully");
     }
 
-    
+
     public function updateimage(Request $request,$id){
         $request->validate([
             'profileimages'=> 'required',
+
+
         ]);
         $user =User::find($id);
         if ($request->hasfile('profileimages')) {
@@ -60,5 +63,5 @@ class ProfileController extends Controller
         $user->update();
         return redirect()->back()->with("message","Your changes successfully");
     }
-      
+
 }
