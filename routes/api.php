@@ -39,8 +39,10 @@ Route::middleware(['auth:sanctum','user.api'])->group(function () {
     Route::post('change-password', [AuthApiController::class, 'changePassword']);
     Route::post('change-profile', [AuthApiController::class, 'updateProfile']);
 
-    Route::get('/customers', [CustomerApiController::class, 'index'])->name('customer.index');
-    Route::post('/store-customers', [CustomerApiController::class, 'store'])->name('customer.store');
+    Route::get('/customers', [CustomerApiController::class, 'index']);
+    Route::post('/store-customers', [CustomerApiController::class, 'store']);
+    Route::post('/customers/{id}', [CustomerApiController::class, 'update']);
+    Route::delete('/customers/{id}', [CustomerApiController::class, 'destroy']);
 
     Route::get('banners', [BannerApiController::class, 'index']);
 
