@@ -23,6 +23,24 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label for="exampleTextarea1">Templates ID<span style="color: red">*</span></label>
+                    <input class="form-control" id="exampleTextarea1" name="templates"  value="{{ old('templates', $template->template_id) }}" />
+                    @error('templates')
+                    <span>
+                        <div class="text-danger small">{{ $message }}</div>
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="exampleTextarea1">Sender ID<span style="color: red">*</span></label>
+                    <input class="form-control" id="exampleTextarea1" name="sender" value="{{ old('sender', $template->sender_id) }}"/>
+                    @error('sender')
+                    <span>
+                        <div class="text-danger small">{{ $message }}</div>
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary mr-2">Update</button>
                     <button type="button" class="btn btn-light">Clear</button>
                 </div>

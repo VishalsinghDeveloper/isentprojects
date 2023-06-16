@@ -33,6 +33,8 @@
                                     <tr>
                                         <th>Sr No.</th>
                                         <th>Description</th>
+                                        <th>Template ID</th>
+                                        <th>Sender Id</th>
                                         <th class="d-flex justify-content-end">Action</th>
                                     </tr>
                                 </thead>
@@ -43,6 +45,8 @@
                                         <td class="col-5 text-wrap">
                                             {{ $temp->description }}
                                         </td>
+                                        <td>{{ $temp->template_id  }}</td>
+                                        <td>{{ $temp->sender_id  }}</td>
                                         <td class="d-flex justify-content-end">
                                             <a class="edit" href="{{ route('templates-edit',$temp->id) }}" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                             <a class="delete" href="{{ route('templates-delete',$temp->id) }}" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>

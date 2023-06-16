@@ -48,7 +48,7 @@ Route::middleware(['auth:sanctum','user.api'])->group(function () {
 
     Route::get('faqs', [FAQApiController::class, 'index']);
 
-    Route::post('offers-send', [OfferApiController::class, 'sendOffer']);
+    Route::post('offers-send/{id}', [OfferApiController::class, 'sendOffer']);
 
     Route::get('history', [HistoryApiController::class, 'getHistory']);
 

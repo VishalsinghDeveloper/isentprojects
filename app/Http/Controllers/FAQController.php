@@ -9,7 +9,7 @@ class FAQController extends Controller
 {
     public function index()
     {
-        $faqs = FAQ::paginate(5);
+        $faqs = FAQ::all();
         return view('admin.pages.faqs.faqs', compact('faqs'));
     }
 

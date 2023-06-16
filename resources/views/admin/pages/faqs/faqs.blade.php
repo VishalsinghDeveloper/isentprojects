@@ -8,6 +8,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">FAQs</h4>
                 <div>
+                    <a href="{{ route('faqs-create') }}" class="btn btn-primary mb-3">Add New</a>
                     <a href="javascript:void(0);" onclick="history.back();" class="btn btn-primary mb-3">Back</a>
                 </div>
             </div>
