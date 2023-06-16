@@ -19,7 +19,7 @@ class OfferApiController extends Controller
                 'description' => 'required',
                 'customers' => 'required',
             ]);
-            
+
             $customerIds = explode(',', $request->input('customers'));
             foreach ($customerIds as $customerId) {
                 $offerCustomer = new Offer();
@@ -40,13 +40,13 @@ class OfferApiController extends Controller
                 'VAR1' =>  $var1,
                 'VAR2' => $var2,
             ];
-    
+
             $response = Http::withHeaders([
                 'accept' => 'application/json',
                 'authkey' => 'Enter your MSG91 authkey',
                 'content-type' => 'application/json',
             ])->post('https://control.msg91.com/api/v5/flow/', $requestData);
-    
+
             if ($response->successful()) {
                 return response()->json([
                     'status' => true,
@@ -65,7 +65,7 @@ class OfferApiController extends Controller
                 'status' => false,
                 'message' => $e->getMessage(),
                 'data' => []
-            ], 400);    
+            ], 400);
         }
     }
 }
